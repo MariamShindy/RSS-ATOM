@@ -1,0 +1,180 @@
+body{
+    font-family: 'Spectral SC';font-size: 22px;
+    text-transform: uppercase;
+}
+.indexBody{
+    background-image:url('../Imgs/index.jpg');
+    background-size: cover;
+    color: white ;
+}
+
+.mainHeader{
+    margin-left: 270px;
+}
+.mainHeader span{
+    margin-left: 90px;
+}
+
+.btn-reg,.btn-log{
+    background-color:gray;
+    color:white;
+    text-decoration: none;
+    font-size: 20px;
+    font-weight: bold;
+    padding :0.81rem 1.87rem;
+    border-radius: 30px;
+    border: 2px solid transparent ;
+    transition: 0.4s;
+    display: inline-block; 
+    width: 230px; 
+    text-align: center; 
+    margin-left: 360px; 
+  }
+  .btn-reg:hover,.btn-log:hover{
+    background-color: transparent;
+    border: 2px solid;
+    color : white
+  }
+ 
+  .registerBody{
+    background-image:url('../Imgs/register.jpg');
+    background-size: cover;
+    color: black ;
+  }
+  #register-section {
+    width: 100%;
+    margin-left: 450px;
+    margin-top: 100px;
+    max-width: 400px; 
+    padding: 40px; 
+    border: 1px solid #ccc; 
+    border-radius: 8px; 
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #fff; 
+}
+  #register-email ,#register-password{
+   width: 300px; 
+   border: black 1px solid;
+  }
+  .registerHeader{
+    font-size: 45px;
+    text-align: center;
+  }
+  #register-label{
+    font-size: 26px;
+  }
+  .btn-register{
+    background-color:gray;
+    color:white;
+    text-decoration: none;
+    font-size: 20px;
+    font-weight: bold;
+    padding :0.3rem 1.6rem;
+    border-radius: 30px;
+    border: 2px solid transparent;
+    transition: 0.4s;
+    display: inline-block; 
+    width: 150px; 
+    text-align: center;  
+    margin-left: 70px;
+  }
+  .btn-register:hover{
+    background-color: transparent;
+    border: 2px solid;
+    color : black
+  }
+  .loginBody{
+    background-image:url('../Imgs/login.jpg');
+    background-size: cover;
+    color: white ;
+  }
+  #login-section {
+    width: 100%;
+    margin-left: 700px;
+    margin-top: 100px;
+    max-width: 400px; 
+    padding: 40px; 
+    border: 1px solid #ccc; 
+    border-radius: 8px; 
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
+    background-color: black;
+}
+  #login-email ,#login-password{
+   width: 300px; 
+   border: black 1px solid;
+  }
+  .loginHeader{
+    font-size: 45px;
+    text-align: center;
+  }
+  #login-label{
+    font-size: 26px;
+  }
+  .btn-login{
+    background-color:gray;
+    color:white;
+    text-decoration: none;
+    font-size: 20px;
+    font-weight: bold;
+    padding :0.3rem 1.6rem;
+    border-radius: 30px;
+    border: 2px solid transparent;
+    transition: 0.4s;
+    display: inline-block; 
+    width: 150px; 
+    text-align: center;  
+    margin-left: 70px;
+  }
+  .btn-login:hover{
+    background-color: transparent;
+    border: 2px solid;
+    color : white
+  }
+
+  .addFeedBody{
+    background-image:url('../Imgs/addFeed.jpg');
+    background-size: cover;
+    color: black ;
+  }
+  #addFeed-section {
+    width: 100%;
+    margin-left: 700px;
+    margin-top: 10px;
+    max-width: 400px; 
+    padding: 40px; 
+    border: 1px solid #ccc; 
+    border-radius: 8px; 
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
+    background-color: white;
+}
+  #addFeed-input {
+   width: 300px; 
+   border: black 1px solid;
+  }
+  .addFeedHeader{
+    font-size: 45px;
+    text-align: center;
+  }
+  #addFeed-label{
+    font-size: 26px;
+  }
+  .btn-addFeed{
+    background-color:gray;
+    color:black;
+    text-decoration: none;
+    font-size: 20px;
+    font-weight: bold;
+    padding :0.2rem 1.6rem;
+    border-radius: 30px;
+    border: 2px solid transparent;
+    transition: 0.4s;
+    display: inline-block; 
+    width: 200px; 
+    text-align: center;  
+    margin-left: 60px;
+  }
+  .btn-addFeed:hover{
+    background-color: transparent;
+    border: 2px solid;
+    color : black
+  }
