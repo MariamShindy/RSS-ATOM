@@ -1,10 +1,11 @@
 using Dapper;
 using System.Data;
+using System.Xml.Linq;
 using TaskFive.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDistributedMemoryCache();
-
+builder.Services.AddHttpClient();
 builder.Services.AddSession(options =>
 {
 	options.IdleTimeout = TimeSpan.FromMinutes(30);
@@ -28,6 +29,12 @@ app.UseStaticFiles();
 
 app.UseSession();
 
+app.Use(async (context, next) =>
+{
+    context.Response.Headers.Add("Permissions-Policy", "geolocation=(self)");
+    await next();
+});
+
 DatabaseContext.CreateTables();
 
 app.MapPost("/register", async (HttpRequest request, IDbConnection db) =>
@@ -41,7 +48,7 @@ app.MapPost("/register", async (HttpRequest request, IDbConnection db) =>
 	{
 		User user = new User(email, password);
 		await db.ExecuteAsync(sql, user);
-		return Results.Text(@"<script>window.location.href = '/login.html';</script>", "text/html");
+		return Results.Text(@"<script>window.location.href = '#login-section';</script>", "text/html");
 	}
 	catch (Exception ex)
 	{
@@ -56,15 +63,15 @@ app.MapPost("/login", async (HttpRequest request, IDbConnection db) =>
 	var password = form["password"].ToString();
 
 	var sql = "SELECT * FROM Users WHERE Email = @Email AND Password = @Password";
-	var user = await db.QuerySingleOrDefaultAsync<User>(sql, new { Email = email, Password = password }) ;
-	
+	var user = await db.QuerySingleOrDefaultAsync<User>(sql, new { Email = email, Password = password });
+
 	if (user != null)
 	{
 		try
 		{
 			request.HttpContext.Session.SetInt32("userId", (int)user.ID);
-			string redirectScript = "<script>window.location.href = '/addFeed.html';</script>";
-			return Results.Text(redirectScript, "text/html");
+			Console.WriteLine($"Session userId set to {(int)user.ID}"); //new
+			return Results.Text(@"<script>window.location.href = '#addFeed-section';</script>", "text/html");
 		}
 		catch (Exception ex)
 		{
@@ -84,7 +91,8 @@ app.MapPost("/feeds", async (HttpRequest request, IDbConnection db) =>
 		return Results.Text("Unauthorized", statusCode: 401);
 	}
 
-	var sqlInsert = "INSERT INTO Feeds (UserId, Url) VALUES (@UserId, @Url)";
+    Console.WriteLine($"UserId from session: {userId}"); 
+    var sqlInsert = "INSERT INTO Feeds (UserId, Url) VALUES (@UserId, @Url)";
 	await db.ExecuteAsync(sqlInsert, new { UserId = userId, Url = url });
 
 	var sqlSelect = "SELECT * FROM Feeds WHERE UserId = @UserId";
@@ -94,11 +102,11 @@ app.MapPost("/feeds", async (HttpRequest request, IDbConnection db) =>
 	foreach (var feed in feeds)
 	{
 		feedsHtml += $"<li class='list-group-item d-flex justify-content-between align-items-center'>{feed.Url} " +
-					 $"<button class='btn btn-danger btn-sm' onclick='removeFeed({feed.Id})'>Remove</button></li>";
+					 $"<button class='btn btn-danger btn-sm' onclick='removeFeed({feed.Id})'>Remove</button>" +
+                     $"<button class='btn btn-primary btn-sm' onclick='toggleFeedRender({feed.Id} ,\"{feed.Url}\")'>Render</button></li>";
 	}
 	return Results.Text(feedsHtml, "text/html");
 });
-
 
 app.MapPost("/getFeeds", async (HttpRequest request, IDbConnection db) =>
 {
@@ -114,12 +122,79 @@ app.MapPost("/getFeeds", async (HttpRequest request, IDbConnection db) =>
 	return Results.Json(feeds);
 });
 
+app.MapGet("/fetchFeedContent", async (HttpContext context) =>
+{
+    try
+    {
+        if (!context.Request.Query.TryGetValue("url", out var url))
+            throw new ArgumentException("URL parameter is missing");
+
+        var httpClientFactory = context.RequestServices.GetRequiredService<IHttpClientFactory>();
+        var httpClient = httpClientFactory.CreateClient();
+
+        HttpResponseMessage response = await httpClient.GetAsync(url);
+
+        if (response.IsSuccessStatusCode)
+        {
+            string xmlContent = await response.Content.ReadAsStringAsync();
+            string formattedContent = ParseXmlToHtml(xmlContent); 
+            return Results.Text(formattedContent, "text/html");
+        }
+        else
+        {
+            return Results.Text($"Failed to fetch RSS feed content. Status code: {response.StatusCode}");
+        }
+    }
+    catch (Exception ex)
+    {
+        return Results.Text($"Error fetching RSS feed content: {ex.Message}");
+    }
+});
+
+static string ParseXmlToHtml(string xmlContent)
+{
+    try
+    {
+        XDocument doc = XDocument.Parse(xmlContent);
+
+        var items = doc.Root.Descendants("item")
+                            .Select(item => new
+                            {
+                                Title = item.Element("title")?.Value ?? "",
+                                Description = item.Element("description")?.Value ?? "",
+                                Link = item.Element("link")?.Value ?? ""
+                            });
+
+        if (items.Any())
+        {
+            var html = "<div>";
+            foreach (var item in items)
+            {
+                html += $"<h3><a href='{item.Link}' target='_blank'>{item.Title}</a></h3>";
+                html += $"<p>{item.Description}</p>";
+                html += "<hr />";
+            }
+            html += "</div>";
+            return html;
+        }
+        else
+        {
+            return "<p>No items found in the RSS feed.</p>";
+        }
+    }
+    catch (Exception ex)
+    {
+		return $"<p style=\"color: red;\">Incorrect feed url </p>";
+	}
+}
+
 app.MapPost("/removeFeed", async (HttpRequest request, IDbConnection db) =>
 {
 	var form = await request.ReadFormAsync();
 	var feedId = int.Parse(form["feedId"]);
 	var sql = "DELETE FROM Feeds WHERE Id = @Id";
 	await db.ExecuteAsync(sql, new { Id = feedId });
+	Console.WriteLine("feed removed successfully !!");
 	return Results.Ok();
 });
 

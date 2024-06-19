@@ -1,17 +1,87 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" id="Body">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
     <title>RSS/ATOM Reader</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="Css/Style.css">
     <script src="https://unpkg.com/htmx.org@1.6.1/dist/htmx.js" crossorigin="anonymous"></script>
+    <script src="Js/Js.js"></script>
 </head>
-<body class="indexBody">
-<br><br>
-<H1 class="mainHeader">We Simplify Your RSS <br> <span>Management</span></H1><br><br><br>
-<a href="register.html" target="_self" class="btn-reg" >Register</a><br><br><br><br>
-<a href="login.html" target="_self" class="btn-log" >Login</a>
+<body>
+
+    <!-- Index Page Content -->
+    <div id="index-section">
+        <br><br>
+        <H1 class="mainHeader">We Simplify Your RSS <br> <span>Management</span></H1><br><br><br>
+        <a href="#" target="_self" class="btn-reg">Register</a><br><br><br><br>
+        <a href="#" target="_self" class="btn-log">Login</a>
+    </div>
+
+    <!-- Register Page Content -->
+    <div id="RegisterBody" style="display: none;">
+        <div id="register-section">
+            <h2 class="registerHeader">Register</h2>
+            <form id="registerForm" class="mb-3" hx-post="/register" hx-target="#register-response" hx-swap="innerHTML" hx-headers='{"Content-Type": "application/x-www-form-urlencoded"}'>
+                <div class="mb-3">
+                    <label for="register-email" class="form-label" id="register-label">Email address</label>
+                    <input type="email" class="form-control" id="register-email" name="email" required>
+                </div>
+                <div class="mb-3">
+                    <label for="register-password" class="form-label" id="register-label">Password</label>
+                    <input type="password" class="form-control" id="register-password" name="password" required>
+                </div>
+                <button type="submit" class="btn-register">REGISTER</button>
+            </form>
+            <div id="register-response"></div>
+        </div>
+    </div>
+
+    <!-- Login Page Content -->
+    <div id="LoginBody" style="display: none;">
+        <div id="login-section" >
+            <h2 class="loginHeader">Login</h2>
+            <form id="loginForm" class="mb-3" hx-post="/login" hx-target="#login-response" hx-swap="innerHTML" hx-headers='{"Content-Type": "application/x-www-form-urlencoded"}'>
+                <div class="mb-3">
+                    <label for="login-email" class="form-label" id="login-label">Email address</label>
+                    <input type="email" class="form-control" id="login-email" name="email" required>
+                </div>
+                <div class="mb-3">
+                    <label for="login-password" class="form-label" id="login-label">Password</label>
+                    <input type="password" class="form-control" id="login-password" name="password" required>
+                </div>
+                <button type="submit" class="btn-login">LOGIN</button>
+            </form>
+            <div id="login-response"></div>
+        </div>
+    </div>
+
+    <!-- Add Feed Page Content -->
+    <div id="AddFeedBody" style="display: none;">
+        <div class="d-flex justify-content-between align-items-center">
+            <a id="btn-Logout" class="btn btn-outline-danger ms-auto" href="index.html">Logout</a>
+        </div>
+        <div id="addFeed-section">
+            <br><br>
+            <h2 class="addFeedHeader">Add Feed</h2>
+            <form id="addFeedForm" class="mb-3" hx-post="/feeds" hx-target="#feed-list" hx-trigger="submit" hx-swap="innerHTML" hx-headers='{"Content-Type": "application/x-www-form-urlencoded"}'>
+                <div class="mb-3">
+                    <label for="addFeed-input" class="form-label" id="addFeed-label">Feed Url</label>
+                    <input type="text" id="addFeed-input" class="form-control" name="url" required>
+                </div>
+                <br>
+                <button type="submit" class="btn-addFeed">ADD FEED</button>
+            </form>
+        </div>
+        <br />
+        <ul id="feed-list" class="list-group">
+            <!-- User Feeds will be loaded here -->
+        </ul>
+        <div id="feed-content" style="display: none;">
+            <!-- Rendered feed content will be loaded here -->
+        </div>
+    </div>
 </body>
 </html>

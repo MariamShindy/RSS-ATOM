@@ -1,11 +1,15 @@
-body{
-    font-family: 'Spectral SC';font-size: 22px;
+body {
+    font-family: 'Spectral SC';
+    font-size: 22px;
     text-transform: uppercase;
 }
-.indexBody{
-    background-image:url('../Imgs/index.jpg');
+#index-section {
+    background-image: url('../Imgs/index.jpg');
     background-size: cover;
-    color: white ;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100%;
+    color: white
 }
 
 .mainHeader{
@@ -25,35 +29,38 @@ body{
     border-radius: 30px;
     border: 2px solid transparent ;
     transition: 0.4s;
-    display: inline-block; 
-    width: 230px; 
-    text-align: center; 
-    margin-left: 360px; 
+    display: inline-block;
+    width: 230px;
+    text-align: center;
+    margin-left: 360px;
   }
   .btn-reg:hover,.btn-log:hover{
     background-color: transparent;
     border: 2px solid;
     color : white
   }
- 
-  .registerBody{
-    background-image:url('../Imgs/register.jpg');
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+#RegisterBody {
+    background-image: url('../Imgs/register.jpg');
     background-size: cover;
-    color: black ;
-  }
+    color: black;
+}
   #register-section {
     width: 100%;
     margin-left: 450px;
     margin-top: 100px;
-    max-width: 400px; 
-    padding: 40px; 
-    border: 1px solid #ccc; 
-    border-radius: 8px; 
+    max-width: 400px;
+    padding: 40px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    background-color: #fff; 
 }
   #register-email ,#register-password{
-   width: 300px; 
+   width: 300px;
    border: black 1px solid;
   }
   .registerHeader{
@@ -73,9 +80,9 @@ body{
     border-radius: 30px;
     border: 2px solid transparent;
     transition: 0.4s;
-    display: inline-block; 
-    width: 150px; 
-    text-align: center;  
+    display: inline-block;
+    width: 150px;
+    text-align: center;
     margin-left: 70px;
   }
   .btn-register:hover{
@@ -83,24 +90,32 @@ body{
     border: 2px solid;
     color : black
   }
-  .loginBody{
-    background-image:url('../Imgs/login.jpg');
+
+#LoginBody {
+    background-image: url('../Imgs/login.jpg');
+    color: white;
     background-size: cover;
-    color: white ;
-  }
+    background-position: center;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
   #login-section {
     width: 100%;
     margin-left: 700px;
     margin-top: 100px;
-    max-width: 400px; 
-    padding: 40px; 
-    border: 1px solid #ccc; 
-    border-radius: 8px; 
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
+    max-width: 400px;
+    padding: 40px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     background-color: black;
 }
   #login-email ,#login-password{
-   width: 300px; 
+   width: 300px;
    border: black 1px solid;
   }
   .loginHeader{
@@ -120,9 +135,9 @@ body{
     border-radius: 30px;
     border: 2px solid transparent;
     transition: 0.4s;
-    display: inline-block; 
-    width: 150px; 
-    text-align: center;  
+    display: inline-block;
+    width: 150px;
+    text-align: center;
     margin-left: 70px;
   }
   .btn-login:hover{
@@ -131,24 +146,30 @@ body{
     color : white
   }
 
-  .addFeedBody{
-    background-image:url('../Imgs/addFeed.jpg');
+#AddFeedBody {
+    background-image: url('../Imgs/addFeed.jpg');
+    color: black;
     background-size: cover;
-    color: black ;
-  }
+    background-position: center;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
   #addFeed-section {
     width: 100%;
     margin-left: 700px;
     margin-top: 10px;
-    max-width: 400px; 
-    padding: 40px; 
-    border: 1px solid #ccc; 
-    border-radius: 8px; 
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
+    max-width: 400px;
+    padding: 40px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     background-color: white;
 }
   #addFeed-input {
-   width: 300px; 
+   width: 300px;
    border: black 1px solid;
   }
   .addFeedHeader{
@@ -168,9 +189,9 @@ body{
     border-radius: 30px;
     border: 2px solid transparent;
     transition: 0.4s;
-    display: inline-block; 
-    width: 200px; 
-    text-align: center;  
+    display: inline-block;
+    width: 200px;
+    text-align: center;
     margin-left: 60px;
   }
   .btn-addFeed:hover{
